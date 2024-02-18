@@ -5,6 +5,7 @@ const port = 3000;
 var project_id = ''; 
 var item_codename = ''; 
 var language = ''; 
+var unpublish_item_type = 'test_unpublish_date'; //enter your item type that has unpublish date element
 
 
 const API_BEARER_TOKEN = process.env.API_BEARER_TOKEN; // MAPI Key in .env file
@@ -63,7 +64,7 @@ function fetchUnpublishDate(project_id, item_codename) {
               var response = JSON.parse(xhr.responseText);
               console.log(JSON.stringify(response)); //so the values of the elements are not displayed [Object] only in the response
               
-              // sem pridam variables ktore zistim       
+              // unpublish date and timezone variables       
               var date = response.item.elements.unpublish.value;
               console.log(`date is ${date}`);
 
@@ -108,7 +109,7 @@ const server = http.createServer((req, res) => {
         const notification = jsonData;
         console.log('Received notification:', JSON.stringify(notification));
         console.log('---')
-        if (notification.data.items[0].type == 'test_unpublish_date') {
+        if (notification.data.items[0].type == unpublish_item_type) {
 
           //find out item codename and projectID for the Delivery API call
           item_codename = notification.data.items[0].codename;
