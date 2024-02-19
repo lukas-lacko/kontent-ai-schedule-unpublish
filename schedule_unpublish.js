@@ -92,13 +92,15 @@ const server = http.createServer((req, res) => {
     req.on('data', (chunk) => {
       body += chunk;
     });
-
+        let secret  = "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk=";
         // Example of generating the hash to verify the notification
-        const isValidSignature = signatureHelper.isValidSignatureFromString(
+        const isValidSignature = (req, secret) => {
+          return signatureHelper.isValidSignatureFromString(
             req.body, // Use raw body data from the request, i.e., by using body-parser
-            "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk=",
-            req.headers['x-kc-signature']
+            secret,
+            req.headers['x-kontent-ai-signature']
           );
+        };
         
         console.log(isValidSignature)
 
