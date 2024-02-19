@@ -1,4 +1,5 @@
 const signatureHelper = require('@kontent-ai/webhook-helper');
+const secret = "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk=";
 var XMLHttpRequest = require('xhr2'); // so the xhr works also with node, without this it would work in browser only
 const http = require('http');
 const port = 3000;
@@ -94,13 +95,15 @@ const server = http.createServer((req, res) => {
     });
 
         // Example of generating the hash to verify the notification
-        const isValidSignature = signatureHelper.isValidSignatureFromString(
+        const isValidSignature = (req, secret) => {
+          return signatureHelper.isValidSignatureFromString(
             req.body, // Use raw body data from the request, i.e., by using body-parser
-            "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk=",
+            secret,
             req.headers['x-kc-signature']
           );
+        };
         
-        console.log(JSON.stringify(isValidSignature));
+        console.log(JSON.stringify(isValidSignature))
 
     req.on('end', () => {
       // Parse the JSON data
