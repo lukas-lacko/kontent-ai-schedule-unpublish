@@ -92,7 +92,6 @@ const server = http.createServer((req, res) => {
     req.on('data', (chunk) => {
       body += chunk;
     });
-        let secret  = "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk=";
         // Example of generating the hash to verify the notification
         const isValidSignature = (req, secret) => {
           return signatureHelper.isValidSignatureFromString(
@@ -102,7 +101,7 @@ const server = http.createServer((req, res) => {
           );
         };
         
-        console.log(isValidSignature)
+        console.log(isValidSignature(req, "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk="));
 
     req.on('end', () => {
       // Parse the JSON data
