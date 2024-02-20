@@ -12,6 +12,15 @@ var unpublish_item_type = 'test_unpublish_date'; //enter your item type that has
 
 const API_BEARER_TOKEN = process.env.API_BEARER_TOKEN; // MAPI Key in .env file
 
+        // Example of generating the hash to verify the notification
+        const isValidSignature = (req, secret) => {
+          return signatureHelper.isValidSignatureFromString(
+            req.body, // Use raw body data from the request, i.e., by using body-parser
+            secret,
+            req.headers['x-kc-signature']
+          );
+        };
+
 function scheduleUnpublish(timezone, date, item_codename) {
   console.log(`----Scheduling unpublish for----`)
   console.log(timezone, date, item_codename, language)
@@ -94,16 +103,9 @@ const server = http.createServer((req, res) => {
       body += chunk;
     });
 
-        // Example of generating the hash to verify the notification
-        const isValidSignature = (req, secret) => {
-          return signatureHelper.isValidSignatureFromString(
-            req.body, // Use raw body data from the request, i.e., by using body-parser
-            secret,
-            req.headers['x-kc-signature']
-          );
-        };
+
         
-        console.log(JSON.stringify(isValidSignature))
+        console.log('Signature is valid:', isValidSignature(req, secret));
 
     req.on('end', () => {
       // Parse the JSON data
