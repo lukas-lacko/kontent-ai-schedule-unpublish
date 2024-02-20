@@ -105,8 +105,8 @@ const server = http.createServer((req, res) => {
     });
 
 
-        
-        console.log('Signature is valid:', isValidSignature(req, secret));
+        console.log('Request is:', req)
+       // console.log('Signature is valid:', isValidSignature(req, secret));
 
     req.on('end', () => {
       // Parse the JSON data
