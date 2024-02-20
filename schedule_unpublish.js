@@ -11,6 +11,7 @@ var unpublish_item_type = 'test_unpublish_date'; //enter your item type that has
 
 const API_BEARER_TOKEN = process.env.API_BEARER_TOKEN; // MAPI Key in .env file
 const secret = process.env.SECRET;
+console.log(secret);
 
         // Example of generating the hash to verify the notification
         const isValidSignature = (req, secret) => {
