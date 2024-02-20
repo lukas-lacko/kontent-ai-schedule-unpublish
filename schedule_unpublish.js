@@ -1,5 +1,4 @@
 const signatureHelper = require('@kontent-ai/webhook-helper');
-const secret = "FSpCoFIhvtotk1xDOebR8Fro9lc8ajj6iINzKskboMk=";
 var XMLHttpRequest = require('xhr2'); // so the xhr works also with node, without this it would work in browser only
 const http = require('http');
 const port = 3000;
@@ -11,6 +10,7 @@ var unpublish_item_type = 'test_unpublish_date'; //enter your item type that has
 
 
 const API_BEARER_TOKEN = process.env.API_BEARER_TOKEN; // MAPI Key in .env file
+const secret = process.env.SECRET;
 
         // Example of generating the hash to verify the notification
         const isValidSignature = (req, secret) => {
