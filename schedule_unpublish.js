@@ -1,4 +1,3 @@
-const signatureHelper = require('@kontent-ai/webhook-helper');
 var XMLHttpRequest = require('xhr2'); // so the xhr works also with node, without this it would work in browser only
 const http = require('http');
 const port = 3000;
@@ -10,17 +9,6 @@ var unpublish_item_type = 'test_unpublish_date'; //enter your item type that has
 
 
 const API_BEARER_TOKEN = process.env.API_BEARER_TOKEN; // MAPI Key in .env file
-const secret = process.env.SECRET;
-console.log(secret);
-
-        // Example of generating the hash to verify the notification
-        const isValidSignature = (req, secret) => {
-          return signatureHelper.isValidSignatureFromString(
-            req.body, // Use raw body data from the request, i.e., by using body-parser
-            secret,
-            req.headers['x-kc-signature']
-          );
-        };
 
 function scheduleUnpublish(timezone, date, item_codename) {
   console.log(`----Scheduling unpublish for----`)
@@ -103,10 +91,6 @@ const server = http.createServer((req, res) => {
     req.on('data', (chunk) => {
       body += chunk;
     });
-
-
-        console.log('Request is:', req)
-       // console.log('Signature is valid:', isValidSignature(req, secret));
 
     req.on('end', () => {
       // Parse the JSON data
